@@ -20,7 +20,7 @@ class Pelicula {
   int id;
   bool adult;
   String backdropPath;
-  OriginalLanguage originalLanguage;
+  String originalLanguage;
   String originalTitle;
   List<int> genreIds;
   String title;
@@ -63,10 +63,16 @@ class Pelicula {
     overview = peliculaJson['overview'];
     releaseDate = peliculaJson['release_date'];
   }
+
+  String get posterImg {
+    if (posterPath != null) {
+      return 'https://image.tmdb.org/t/p/w500/$posterPath';
+    }
+    return '';
+  }
 }
 
 enum OriginalLanguage { EN, KO, JA, IT }
-
 
 // API-KEY f9cffb86fafb0e6fe2a130530209e1ee
 //  htt;ps://api.themoviedb.org/3/movie/now_playing?api_key=f9cffb86fafb0e6fe2a130530209e1ee&language=en-US&page=1
