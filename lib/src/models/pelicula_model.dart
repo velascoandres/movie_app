@@ -70,6 +70,13 @@ class Pelicula {
     }
     return '';
   }
+
+  String get backgroundImage {
+    if (backdropPath != null) {
+      return 'https://image.tmdb.org/t/p/w500/$backdropPath';
+    }
+    return '';
+  }
 }
 
 enum OriginalLanguage { EN, KO, JA, IT }
