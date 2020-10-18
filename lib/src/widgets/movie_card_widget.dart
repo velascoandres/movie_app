@@ -7,7 +7,7 @@ class MovieCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    final tarjeta = Container(
       height: 250,
       margin: EdgeInsets.only(right: 15.0),
       child: Column(
@@ -16,13 +16,15 @@ class MovieCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             child: FadeInImage(
               image: NetworkImage(pelicula.posterImg),
-              placeholder: AssetImage('assets/images/loading.gif'),
+              placeholder: AssetImage('assets/images/no-image.jpg'),
               fit: BoxFit.cover,
               height: 160.0,
               width: double.infinity,
             ),
           ),
-          SizedBox(height: 5.0,),
+          SizedBox(
+            height: 5.0,
+          ),
           Text(
             pelicula.title,
             overflow: TextOverflow.ellipsis,
@@ -30,6 +32,12 @@ class MovieCard extends StatelessWidget {
           ),
         ],
       ),
+    );
+    return GestureDetector(
+      child: tarjeta,
+      onTap: () {
+        Navigator.pushNamed(context, 'detalle', arguments: pelicula);
+      },
     );
   }
 }
