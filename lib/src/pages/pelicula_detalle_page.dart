@@ -12,6 +12,17 @@ class PeliculaDetallePage extends StatelessWidget {
       body: CustomScrollView(
         slivers: <Widget>[
           _creareAppBar(pelicula),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                SizedBox(
+                  height: 10,
+                ),
+                _posterTitulo(context, pelicula),
+                _descripcion(pelicula),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -42,6 +53,63 @@ class PeliculaDetallePage extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       ),
+    );
+  }
+
+  Widget _posterTitulo(BuildContext context, Pelicula pelicula) {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: 20.0,
+      ),
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Image(
+              image: NetworkImage(pelicula.posterImg),
+              height: 150.0,
+            ),
+          ),
+          SizedBox(
+            width: 20.0,
+          ),
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  pelicula.title,
+                  style: Theme.of(context).textTheme.headline4,
+                ),
+                Text(
+                  pelicula.originalTitle,
+                  style: Theme.of(context).textTheme.subtitle2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Row(
+                  children: [
+                    Icon(Icons.star_border),
+                    Text(
+                      pelicula.voteAverage.toString(),
+                      style: Theme.of(context).textTheme.subtitle2,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _descripcion(Pelicula pelicula) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+      child: Text(
+        pelicula.overview,
+        textAlign: TextAlign.justify,
+        ),
     );
   }
 }
