@@ -105,10 +105,13 @@ class PeliculaDetallePage extends StatelessWidget {
 
   Widget _descripcion(Pelicula pelicula) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: Text(
         pelicula.overview,
         textAlign: TextAlign.justify,
+        style: TextStyle( 
+          fontSize: 16,
+        ),
         ),
     );
   }
