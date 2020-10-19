@@ -2,10 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart' as httpClient;
+import 'package:movie_app/src/models/actores_model.dart';
 
 import 'package:movie_app/src/models/pelicula_model.dart';
 
-class PeliculasProvider {
+class PeliculasProvider<T> {
   String _apiKey = 'f9cffb86fafb0e6fe2a130530209e1ee';
   String _url = 'api.themoviedb.org';
   String _languaje = 'es-ES';
@@ -63,12 +64,24 @@ class PeliculasProvider {
       'page': _popularesPage.toString(),
     };
     final url = Uri.https(_url, '/3/movie/popular', parametros);
-    final respuesta = await this.procesarRespuesta(url);
+    final List<Pelicula> respuesta = await this.procesarRespuesta(url);
 
     _populares.addAll(respuesta);
     popularesSink(_populares);
     _cargando = false;
 
     return respuesta;
+  }
+
+  Future<List<Actor>> obtenerActores(String idPelicula) async {
+    final parametros = {
+      'api_key': _apiKey,
+      'languaje': _languaje,
+    };
+    final url = Uri.https(_url, '/3/movie/$idPelicula/credits', parametros);
+    final respuesta = await httpClient.get(url);
+    final decodeData = json.decode(respuesta.body);
+    final cast = new Cast.fromJsonList(decodeData['cast']);
+    return cast.actores;
   }
 }

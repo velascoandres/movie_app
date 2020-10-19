@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/src/models/actores_model.dart';
 import 'package:movie_app/src/models/pelicula_model.dart';
+import 'package:movie_app/src/providers/peliculas_provider.dart';
 
 class PeliculaDetallePage extends StatelessWidget {
   const PeliculaDetallePage({Key key}) : super(key: key);
@@ -20,6 +22,7 @@ class PeliculaDetallePage extends StatelessWidget {
                 ),
                 _posterTitulo(context, pelicula),
                 _descripcion(pelicula),
+                _crearCasting(pelicula),
               ],
             ),
           ),
@@ -109,10 +112,66 @@ class PeliculaDetallePage extends StatelessWidget {
       child: Text(
         pelicula.overview,
         textAlign: TextAlign.justify,
-        style: TextStyle( 
+        style: TextStyle(
           fontSize: 16,
         ),
+      ),
+    );
+  }
+
+  _crearCasting(Pelicula pelicula) {
+    final PeliculasProvider peliculasProvider = new PeliculasProvider();
+    return FutureBuilder(
+      future: peliculasProvider.obtenerActores(
+        pelicula.id.toString(),
+      ),
+      builder: (BuildContext context, AsyncSnapshot<List> snapShot) {
+        if (snapShot.hasData) {
+          return _crearActores(snapShot.data);
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
+    );
+  }
+
+  Widget _crearActores(List<Actor> actores) {
+    return SizedBox(
+      height: 200.0,
+      child: PageView.builder(
+        pageSnapping: false,
+        controller: PageController(
+          viewportFraction: 0.3,
+          initialPage: 1,
         ),
+        itemCount: actores.length,
+        itemBuilder: (BuildContext context, int index) {
+          return _actorTarjeta(actores[index]);
+        },
+      ),
+    );
+  }
+
+  Widget _actorTarjeta(Actor actor) {
+    return Container(
+      child: Column(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: FadeInImage(
+              image: NetworkImage(actor.profileImg),
+              placeholder: AssetImage('assets/images/no-image.jpg'),
+              height: 150,
+            ),
+          ),
+          Text(
+            actor.name,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
+      ),
     );
   }
 }

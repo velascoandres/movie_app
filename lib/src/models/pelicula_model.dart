@@ -68,14 +68,14 @@ class Pelicula {
     if (posterPath != null) {
       return 'https://image.tmdb.org/t/p/w500/$posterPath';
     }
-    return '';
+    return 'https://i.pinimg.com/originals/4a/2e/0c/4a2e0c1af5646b56661c40a017f4bd26.png';
   }
 
   String get backgroundImage {
     if (backdropPath != null) {
       return 'https://image.tmdb.org/t/p/w500/$backdropPath';
     }
-    return '';
+    return 'https://i.pinimg.com/originals/4a/2e/0c/4a2e0c1af5646b56661c40a017f4bd26.png';
   }
 }
 
