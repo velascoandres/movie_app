@@ -7,13 +7,15 @@ class MovieCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    pelicula.idUnico = '${pelicula.id}-tarjeta';
+
     final tarjeta = Container(
       height: 250,
       margin: EdgeInsets.only(right: 15.0),
       child: Column(
         children: [
           Hero(
-            tag: pelicula.id,
+            tag: pelicula.idUnico,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: FadeInImage(
