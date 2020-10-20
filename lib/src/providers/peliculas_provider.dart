@@ -84,4 +84,15 @@ class PeliculasProvider<T> {
     final cast = new Cast.fromJsonList(decodeData['cast']);
     return cast.actores;
   }
+
+  Future<List<Pelicula>> buscarPelicula(String query) async {
+    final parametros = {
+      'api_key': _apiKey,
+      'languaje': _languaje,
+      'query': query,
+    };
+    final url = Uri.https(_url, '/3/search/movie', parametros);
+
+    return await this.procesarRespuesta(url);
+  }
 }
