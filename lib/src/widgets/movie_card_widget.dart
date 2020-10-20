@@ -12,14 +12,17 @@ class MovieCard extends StatelessWidget {
       margin: EdgeInsets.only(right: 15.0),
       child: Column(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: FadeInImage(
-              image: NetworkImage(pelicula.posterImg),
-              placeholder: AssetImage('assets/images/no-image.jpg'),
-              fit: BoxFit.cover,
-              height: 160.0,
-              width: double.infinity,
+          Hero(
+            tag: pelicula.id,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: FadeInImage(
+                image: NetworkImage(pelicula.posterImg),
+                placeholder: AssetImage('assets/images/no-image.jpg'),
+                fit: BoxFit.cover,
+                height: 160.0,
+                width: double.infinity,
+              ),
             ),
           ),
           SizedBox(
